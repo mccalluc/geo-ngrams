@@ -1,3 +1,6 @@
+# Downloaded files that should not be checked in
+cache
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
