@@ -1,38 +1,44 @@
 #!/usr/bin/env bash
 set -o errexit
 
+info() {
+    echo '  already done'
+}
+
+export PYTHONIOENCODING='latin_1'
 cd cache
-ZIP=DomesticNames_AllStates_Text.zip
 
 echo 'download...'
-
+ZIP=DomesticNames_AllStates_Text.zip
 URL="https://prd-tnm.s3.amazonaws.com/StagedProducts/GeographicNames/DomesticNames/$ZIP"
-
 if [ -e "$ZIP" ]; then
-    echo '  already done'
+    info
 else
     wget $URL
 fi
 
-
-export PYTHONIOENCODING='latin_1'
-
 echo 'parse...'
-
-STREAMS='streams.tsv'
-if [ -e "$STREAMS" ]; then
-    echo '  already done'
+GEONAMES='1-geonames.tsv'
+if [ -e "$GEONAMES" ]; then
+    info
 else
-    unzip -p "$ZIP" | ../scripts/parse-gnis.py  > "$STREAMS"
+    unzip -p "$ZIP" | ../scripts/parse-gnis.py  > "$GEONAMES"
 fi
 
 echo 'unique...'
-
-UNIQUE='unique-words.txt'
+UNIQUE='2-unique-words.txt'
 if [ -e "$UNIQUE" ]; then
-    echo '  already done'
+    info
 else
-    cat "$STREAMS" | ../scripts/find-unique.py > "$UNIQUE"
+    cat "$GEONAMES" | ../scripts/find-unique.py > "$UNIQUE"
+fi
+
+echo 'filter...'
+FILTERED='3-filtered.tsv'
+if [ -e "$FILTERED" ]; then
+    info
+else
+    cat "$GEONAMES" | ../scripts/filter.py "$UNIQUE" > "$FILTERED"
 fi
 
 
