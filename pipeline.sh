@@ -41,6 +41,10 @@ else
     cat "$GEONAMES" | ../scripts/filter.py "$UNIQUE" > "$FILTERED"
 fi
 
-
-
-
+echo 'bucket...'
+BUCKET='4-bucket.json'
+if [ -e "$BUCKET" ]; then
+    info
+else
+    cat "$FILTERED" | ../scripts/bucket.py > "$BUCKET"
+fi
