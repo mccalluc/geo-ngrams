@@ -64,3 +64,8 @@ if [ -e "$XY" ]; then
 else
     ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
 fi
+
+echo 'js...'
+JS='../docs/bigrams.js'
+echo 'export default' > "$JS"
+cat "$XY" >> "$JS"
