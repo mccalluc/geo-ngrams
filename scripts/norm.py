@@ -18,7 +18,7 @@ def ratio_counter(a, b):
     Returns a dict whose values are a ratio
     of the respective values in a and b.
     '''
-    return {k: v / b[k] for k, v in a.items()}
+    return {k: round(v / b[k], 3) for k, v in a.items()}
 
 
 counters = loads(''.join(stdin.readlines()))

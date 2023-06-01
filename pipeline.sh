@@ -56,3 +56,11 @@ if [ -e "$NORMS" ]; then
 else
     cat "$COUNTS" | ../scripts/norm.py > "$NORMS"
 fi
+
+echo 'xy...'
+XY='6-xy-buckets.json'
+if [ -e "$XY" ]; then
+    info
+else
+    ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
+fi
