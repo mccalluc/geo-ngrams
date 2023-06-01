@@ -41,10 +41,18 @@ else
     cat "$GEONAMES" | ../scripts/filter.py "$UNIQUE" > "$FILTERED"
 fi
 
-echo 'bucket...'
-BUCKET='4-bucket.json'
-if [ -e "$BUCKET" ]; then
+echo 'count...'
+COUNTS='4-count-buckets.json'
+if [ -e "$COUNTS" ]; then
     info
 else
-    cat "$FILTERED" | ../scripts/bucket.py > "$BUCKET"
+    cat "$FILTERED" | ../scripts/count.py > "$COUNTS"
+fi
+
+echo 'norm...'
+NORMS='5-norm-buckets.json'
+if [ -e "$NORMS" ]; then
+    info
+else
+    cat "$COUNTS" | ../scripts/norm.py > "$NORMS"
 fi

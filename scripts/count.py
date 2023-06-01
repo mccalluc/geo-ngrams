@@ -8,8 +8,11 @@ cols = ["unique_word", "feature_name", "feature_class", "state_name", "prim_lat_
 
 buckets = defaultdict(Counter)
 
+def parse_round(x, r=1):
+    return int(float(x) / r) * r
+
 def make_bucket_name(lat, long):
-    return f'{{"lat":{round(float(lat))},"long":{round(float(long))}}}'
+    return f'{{"lat":{parse_round(lat, 5)},"long":{parse_round(long, 5)}}}'
 
 for row in DictReader(stdin, delimiter="\t"):
     bucket_name = make_bucket_name(row["prim_lat_dec"], row["prim_long_dec"])
