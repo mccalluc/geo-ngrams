@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -o errexit
-#set -o xtrace
+set -o xtrace
 
 info() {
     echo '  already done'
@@ -87,12 +87,20 @@ else
     wget "https://eric.clst.org/assets/wiki/uploads/Stuff/$GEO"
 fi
 
+echo 'filter...'
+FILTERED_GEO='filtered.json'
+if [ -e "$FILTERED_GEO" ]; then
+    info
+else
+    cat "$GEO" | ../scripts/filter-geo.py 'Alaska' 'Hawaii' > "$FILTERED_GEO"
+fi
+
 echo 'topo...'
 TOPO='topo.json'
 if [ -e "$TOPO" ]; then
     info
 else
-    ../node_modules/topojson-server/bin/geo2topo states="$GEO" > $TOPO
+    ../node_modules/topojson-server/bin/geo2topo states="$FILTERED_GEO" > $TOPO
 fi
 
 echo 'cp topo...'
