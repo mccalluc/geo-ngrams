@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -o errexit
+set -o xtrace
 
 info() {
     echo '  already done'
 }
 
+# npm install
 export PYTHONIOENCODING='latin_1'
 cd cache
 
@@ -65,6 +67,34 @@ else
     ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
 fi
 
-echo 'cp...'
+echo 'cp bigrams...'
 JSON='../docs/bigrams.json'
-cp "$XY" "$JSON"
+if [ -e "$JSON" ]; then
+    info
+else
+    cp "$XY" "$JSON"
+fi
+
+echo 'geo...'
+GEO='gz_2010_us_040_00_20m.json'
+if [ -e "$GEO" ]; then
+    info
+else
+    wget "https://eric.clst.org/assets/wiki/uploads/Stuff/$GEO"
+fi
+
+echo 'topo...'
+TOPO='topo.json'
+if [ -e "$TOPO" ]; then
+    info
+else
+    ../node_modules/topojson-server/bin/geo2topo states="$GEO" > $TOPO
+fi
+
+echo 'cp topo...'
+DOCS_TOPO="../docs/data/$TOPO"
+if [ -e "$DOCS_TOPO" ]; then
+    info
+else
+    cp "$TOPO" "$DOCS_TOPO"
+fi
