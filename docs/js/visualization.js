@@ -1,5 +1,5 @@
 async function main() {
-  const response = await fetch('bigrams.json');
+  const response = await fetch('data/bigrams.json');
   const bigrams = await response.json();
   const buckets = Object.keys(bigrams).map((key) => JSON.parse(key))
 

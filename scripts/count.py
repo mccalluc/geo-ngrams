@@ -2,6 +2,7 @@
 from sys import stdin, argv
 from csv import DictReader
 from collections import defaultdict, Counter
+from math import floor
 from json import dumps
 
 cols = ["unique_word", "feature_name", "feature_class", "state_name", "prim_lat_dec", "prim_long_dec"]
@@ -9,7 +10,8 @@ cols = ["unique_word", "feature_name", "feature_class", "state_name", "prim_lat_
 buckets = defaultdict(Counter)
 
 def parse_round(x, r=1):
-    return int(float(x) / r) * r
+    # Rounds to the center of the interval
+    return (floor(float(x) / r) + 0.5) * r
 
 def make_bucket_name(lat, long):
     return f'{{"lat":{parse_round(lat, 5)},"long":{parse_round(long, 5)}}}'

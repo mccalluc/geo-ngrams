@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -o errexit
-set -o xtrace
+#set -o xtrace
 
 info() {
     echo '  already done'
@@ -9,6 +9,8 @@ info() {
 # npm install
 export PYTHONIOENCODING='latin_1'
 cd cache
+
+# Bigrams:
 
 echo 'download...'
 ZIP=DomesticNames_AllStates_Text.zip
@@ -68,12 +70,14 @@ else
 fi
 
 echo 'cp bigrams...'
-JSON='../docs/bigrams.json'
+JSON='../docs/data/bigrams.json'
 if [ -e "$JSON" ]; then
     info
 else
     cp "$XY" "$JSON"
 fi
+
+# Geography:
 
 echo 'geo...'
 GEO='gz_2010_us_040_00_20m.json'
