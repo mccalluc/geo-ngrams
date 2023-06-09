@@ -65,7 +65,6 @@ else
     ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
 fi
 
-echo 'js...'
-JS='../docs/bigrams.js'
-echo 'export default' > "$JS"
-cat "$XY" >> "$JS"
+echo 'cp...'
+JSON='../docs/bigrams.json'
+cp "$XY" "$JSON"
