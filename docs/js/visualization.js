@@ -1,12 +1,11 @@
 async function main() {
   const response = await fetch('data/bigrams.json');
-  const bigrams = await response.json();
-  const buckets = Object.keys(bigrams).map((key) => JSON.parse(key))
+  const bigramBuckets = await response.json();
+  const buckets = bigramBuckets.map(bucket => ({lat: bucket.lat, long: bucket.long}));
 
-  const spec = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: 800,
-    height: 500,
+  const mapSpec = {
+    width: 600,
+    height: 300,
     projection: {
       type: "albersUsa"
     },
@@ -40,6 +39,10 @@ async function main() {
         }
       }
     ]
+  }
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    vconcat: [mapSpec, mapSpec]
   };
   vegaEmbed('#vis', spec);
 }
