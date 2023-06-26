@@ -97,17 +97,21 @@ else
 fi
 
 echo 'topo...'
-TOPO='topo.json'
+TOPO='full-topo.json'
 if [ -e "$TOPO" ]; then
     info
 else
-    ../node_modules/topojson-server/bin/geo2topo states="$FILTERED_GEO" > $TOPO
+    ../node_modules/topojson-server/bin/geo2topo states="$FILTERED_GEO" > "$TOPO"
+fi
+
+echo 'simple...'
+SIMPLE='topo.json'
+if [ -e "$SIMPLE" ]; then
+    info
+else
+    ../node_modules/topojson-simplify/bin/toposimplify --planar-quantile 0.01  "$TOPO" > "$SIMPLE"
 fi
 
 echo 'cp topo...'
-DOCS_TOPO="../docs/data/$TOPO"
-if [ -e "$DOCS_TOPO" ]; then
-    info
-else
-    cp "$TOPO" "$DOCS_TOPO"
-fi
+DOCS_TOPO="../docs/data/$SIMPLE"
+cp "$SIMPLE" "$DOCS_TOPO"

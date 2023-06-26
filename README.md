@@ -6,9 +6,21 @@ Deployed on [github pages](https://mccalluc.github.io/geo-bigrams)
 ## Developement
 
 A pipeline populates the git-ignored `cache/` directory,
-and as a last step copies the final JSON into `docs/`.
+and copies the final JSON into `docs/`.
 
-From a fresh checkout:
-- `pipeline.sh`
-- `bundle install`
-- `bundle exec jekyll serve`
+From a fresh checkout, install dependencies for the pipeline:
+```
+npm install
+```
+
+Then run the pipeline:
+```
+pipeline.sh
+```
+
+Then install dependencies and start jekyll:
+```
+cd docs
+bundle install
+bundle exec jekyll serve
+```

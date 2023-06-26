@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "topojson-server": "^3.0.1"
+    "topojson-server": "^3.0.1",
+    "topojson-simplify": "^3.0.3"
   }
 }
