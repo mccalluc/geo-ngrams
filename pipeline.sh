@@ -101,7 +101,7 @@ TOPO='full-topo.json'
 if [ -e "$TOPO" ]; then
     info
 else
-    ../node_modules/topojson-server/bin/geo2topo states="$FILTERED_GEO" > "$TOPO"
+    ../node_modules/topojson-server/bin/geo2topo --quantization 1000 states="$FILTERED_GEO" > "$TOPO"
 fi
 
 echo 'simple...'
@@ -109,7 +109,7 @@ SIMPLE='topo.json'
 if [ -e "$SIMPLE" ]; then
     info
 else
-    ../node_modules/topojson-simplify/bin/toposimplify --planar-quantile 0.01  "$TOPO" > "$SIMPLE"
+    ../node_modules/topojson-simplify/bin/toposimplify --planar-quantile 0.05  "$TOPO" > "$SIMPLE"
 fi
 
 echo 'cp topo...'
