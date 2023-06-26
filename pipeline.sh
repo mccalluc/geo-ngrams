@@ -8,6 +8,7 @@ info() {
 
 # npm install
 export PYTHONIOENCODING='latin_1'
+mkdir cache || echo 'cache already exists'
 cd cache
 
 # Bigrams:
