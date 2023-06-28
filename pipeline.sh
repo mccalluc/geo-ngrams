@@ -11,6 +11,45 @@ export PYTHONIOENCODING='latin_1'
 mkdir cache || echo 'cache already exists'
 cd cache
 
+
+# Geography:
+
+echo 'geo...'
+GEO='gz_2010_us_040_00_20m.json'
+if [ -e "$GEO" ]; then
+    info
+else
+    wget "https://eric.clst.org/assets/wiki/uploads/Stuff/$GEO"
+fi
+
+echo 'filter...'
+FILTERED_GEO='filtered.json'
+if [ -e "$FILTERED_GEO" ]; then
+    info
+else
+    cat "$GEO" | ../scripts/filter-geo.py 'Alaska' 'Hawaii' > "$FILTERED_GEO"
+fi
+
+echo 'topo...'
+TOPO='full-topo.json'
+if [ -e "$TOPO" ]; then
+    info
+else
+    ../node_modules/topojson-server/bin/geo2topo --quantization 1000 states="$FILTERED_GEO" > "$TOPO"
+fi
+
+echo 'simple...'
+SIMPLE='topo.json'
+if [ -e "$SIMPLE" ]; then
+    info
+else
+    ../node_modules/topojson-simplify/bin/toposimplify --planar-quantile 0.05  "$TOPO" > "$SIMPLE"
+fi
+
+echo 'cp topo...'
+DOCS_TOPO="../docs/data/$SIMPLE"
+cp "$SIMPLE" "$DOCS_TOPO"
+
 # ngrams:
 
 echo 'download...'
@@ -77,41 +116,3 @@ if [ -e "$JSON" ]; then
 else
     cp "$XY" "$JSON"
 fi
-
-# Geography:
-
-echo 'geo...'
-GEO='gz_2010_us_040_00_20m.json'
-if [ -e "$GEO" ]; then
-    info
-else
-    wget "https://eric.clst.org/assets/wiki/uploads/Stuff/$GEO"
-fi
-
-echo 'filter...'
-FILTERED_GEO='filtered.json'
-if [ -e "$FILTERED_GEO" ]; then
-    info
-else
-    cat "$GEO" | ../scripts/filter-geo.py 'Alaska' 'Hawaii' > "$FILTERED_GEO"
-fi
-
-echo 'topo...'
-TOPO='full-topo.json'
-if [ -e "$TOPO" ]; then
-    info
-else
-    ../node_modules/topojson-server/bin/geo2topo --quantization 1000 states="$FILTERED_GEO" > "$TOPO"
-fi
-
-echo 'simple...'
-SIMPLE='topo.json'
-if [ -e "$SIMPLE" ]; then
-    info
-else
-    ../node_modules/topojson-simplify/bin/toposimplify --planar-quantile 0.05  "$TOPO" > "$SIMPLE"
-fi
-
-echo 'cp topo...'
-DOCS_TOPO="../docs/data/$SIMPLE"
-cp "$SIMPLE" "$DOCS_TOPO"
