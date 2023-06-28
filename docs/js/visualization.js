@@ -26,20 +26,20 @@ async function main() {
     ]
   }
   const trellisSpec = {
-    width: 50,
-    height: 30,
+    width: 60,
+    height: 60,
+    spacing: 0,
     data: {values: bigrams},
-    mark: 'text',
+    mark: {type: 'text', fontSize: 8},
     encoding: {
       x: {field: 'norm', type: 'quantitative', title: null},
       y: {field: 'count', type: 'quantitative', title: null},
       text: {field: 'ngram'},
-      row: {field: 'lat', title: "latitude / count"},
+      row: {field: 'lat', title: "latitude / count", sort: "descending"},
       column: {field: "long", title: "longitude / norm"}
     }
   }
 
-  console.log(JSON.stringify(trellisSpec, null, 2))
   const spec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     vconcat: [mapSpec, trellisSpec]
