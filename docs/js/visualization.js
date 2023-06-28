@@ -1,10 +1,9 @@
 async function main() {
   const response = await fetch('data/bigrams.json');
-  const bigramBuckets = await response.json();
-  const buckets = bigramBuckets.map(bucket => ({lat: bucket.lat, long: bucket.long}));
+  const bigrams = await response.json();
 
   const mapSpec = {
-    width: 600,
+    width: 500,
     height: 300,
     projection: {
       type: "albersUsa"
@@ -23,26 +22,27 @@ async function main() {
           fill: "lightgray",
           stroke: "white"
         }
-      },
-      {
-        data: {values: buckets},
-        mark: "circle",
-        encoding: {
-          longitude: {
-            field: "long",
-            type: "quantitative"
-          },
-          latitude: {
-            field: "lat",
-            type: "quantitative"
-          },
-        }
       }
     ]
   }
+  const trellisSpec = {
+    width: 50,
+    height: 30,
+    data: {values: bigrams},
+    mark: 'text',
+    encoding: {
+      x: {field: 'norm', type: 'quantitative', title: null},
+      y: {field: 'count', type: 'quantitative', title: null},
+      text: {field: 'ngram'},
+      row: {field: 'lat', title: "latitude / count"},
+      column: {field: "long", title: "longitude / norm"}
+    }
+  }
+
+  console.log(JSON.stringify(trellisSpec, null, 2))
   const spec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    vconcat: [mapSpec, mapSpec]
+    vconcat: [mapSpec, trellisSpec]
   };
   vegaEmbed('#vis', spec);
 }
