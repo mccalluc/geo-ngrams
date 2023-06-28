@@ -1,6 +1,6 @@
 async function main() {
-  const response = await fetch('data/bigrams.json');
-  const bigrams = await response.json();
+  const response = await fetch('data/ngrams.json');
+  const ngrams = await response.json();
 
   const mapSpec = {
     width: 500,
@@ -29,7 +29,7 @@ async function main() {
     width: 60,
     height: 60,
     spacing: 0,
-    data: {values: bigrams},
+    data: {values: ngrams},
     mark: {type: 'text', fontSize: 8},
     encoding: {
       x: {field: 'norm', type: 'quantitative', title: null},

@@ -11,7 +11,7 @@ export PYTHONIOENCODING='latin_1'
 mkdir cache || echo 'cache already exists'
 cd cache
 
-# Bigrams:
+# ngrams:
 
 echo 'download...'
 ZIP=DomesticNames_AllStates_Text.zip
@@ -70,8 +70,8 @@ else
     ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
 fi
 
-echo 'cp bigrams...'
-JSON='../docs/data/bigrams.json'
+echo 'cp ngrams...'
+JSON='../docs/data/ngrams.json'
 if [ -e "$JSON" ]; then
     info
 else

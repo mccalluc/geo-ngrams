@@ -1,7 +1,7 @@
-# geo-bigrams
-Mapping place-name bigrams to uncover linguistic diversity
+# geo-ngrams
+Mapping place-name ngrams to uncover linguistic diversity
 
-Deployed on [github pages](https://mccalluc.github.io/geo-bigrams)
+Deployed on [github pages](https://mccalluc.github.io/geo-ngrams)
 
 ## Developement
 

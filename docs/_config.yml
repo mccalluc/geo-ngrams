@@ -18,9 +18,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: geo-bigrams
-description: Mapping place-name bigrams to uncover linguistic diversity
-baseurl: "/geo-bigrams/" # the subpath of your site, e.g. /blog
+title: geo-ngrams
+description: Mapping place-name ngrams to uncover linguistic diversity
+baseurl: "/geo-ngrams/" # the subpath of your site, e.g. /blog
 url: "mccalluc.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
