@@ -85,34 +85,34 @@ else
     cat "$GEONAMES" | ../scripts/filter.py "$UNIQUE" > "$FILTERED"
 fi
 
-echo 'count...'
-COUNTS='4-count-buckets.json'
-if [ -e "$COUNTS" ]; then
+echo 'ratio...'
+RATIOS='4-ratio-buckets.json'
+if [ -e "$RATIOS" ]; then
     info
 else
-    cat "$FILTERED" | ../scripts/count.py > "$COUNTS"
+    cat "$FILTERED" | ../scripts/ratios.py > "$RATIOS"
 fi
 
-echo 'norm...'
-NORMS='5-norm-buckets.json'
-if [ -e "$NORMS" ]; then
-    info
-else
-    cat "$COUNTS" | ../scripts/norm.py > "$NORMS"
-fi
+# echo 'norm...'
+# NORMS='5-norm-buckets.json'
+# if [ -e "$NORMS" ]; then
+#     info
+# else
+#     cat "$COUNTS" | ../scripts/norm.py > "$NORMS"
+# fi
 
-echo 'xy...'
-XY='6-xy-buckets.json'
-if [ -e "$XY" ]; then
-    info
-else
-    ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
-fi
+# echo 'xy...'
+# XY='6-xy-buckets.json'
+# if [ -e "$XY" ]; then
+#     info
+# else
+#     ../scripts/xy.py "$NORMS" "$COUNTS" > "$XY"
+# fi
 
-echo 'cp ngrams...'
-JSON='../docs/data/ngrams.json'
-if [ -e "$JSON" ]; then
-    info
-else
-    cp "$XY" "$JSON"
-fi
+# echo 'cp ngrams...'
+# JSON='../docs/data/ngrams.json'
+# if [ -e "$JSON" ]; then
+#     info
+# else
+#     cp "$XY" "$JSON"
+# fi
