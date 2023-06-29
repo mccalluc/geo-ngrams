@@ -66,7 +66,7 @@ GEONAMES='1-geonames.tsv'
 if [ -e "$GEONAMES" ]; then
     info
 else
-    unzip -p "$ZIP" | ../scripts/parse-gnis.py  > "$GEONAMES"
+    unzip -p "$ZIP" | ../scripts/parse-gnis.py "$TOPO" > "$GEONAMES"
 fi
 
 echo 'unique...'

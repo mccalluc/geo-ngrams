@@ -1,67 +1,24 @@
 #!/usr/bin/env python3
-from sys import stdin
+from sys import stdin, argv
 from csv import DictReader
+from pathlib import Path
+from json import loads
+
+
+bbox = loads(Path(argv[1]).read_text())['bbox']
+min_long, min_lat, max_long, max_lat = bbox
+
 
 cols = ["feature_name", "feature_class", "state_name", "prim_lat_dec", "prim_long_dec"]
 print("\t".join(cols))
 
-states = set([
-  "Alabama",
-  "Arizona",
-  "Arkansas",
-  "California",
-  "Colorado",
-  "Connecticut",
-  "Delaware",
-  "District of Columbia",
-  "Florida",
-  "Georgia",
-  "Idaho",
-  "Illinois",
-  "Indiana",
-  "Iowa",
-  "Kansas",
-  "Kentucky",
-  "Louisiana",
-  "Maine",
-  "Maryland",
-  "Massachusetts",
-  "Michigan",
-  "Minnesota",
-  "Mississippi",
-  "Missouri",
-  "Montana",
-  "Nebraska",
-  "Nevada",
-  "New Hampshire",
-  "New Jersey",
-  "New Mexico",
-  "New York",
-  "North Carolina",
-  "North Dakota",
-  "Ohio",
-  "Oklahoma",
-  "Oregon",
-  "Pennsylvania",
-  "Rhode Island",
-  "South Carolina",
-  "South Dakota",
-  "Tennessee",
-  "Texas",
-  "Utah",
-  "Vermont",
-  "Virginia",
-  "Washington",
-  "West Virginia",
-  "Wisconsin",
-  "Wyoming"
-])
-
 for row in DictReader((line.replace("\0","").replace("\r","") for line in stdin), delimiter="|"):
-    if row["state_name"] in ["state_name", "Alaska", "Hawaii"]:
-        continue
-    if row["state_name"] not in states:
-        continue
     if row["feature_class"] != "Stream":
+        continue
+    lat = float(row['prim_lat_dec'])
+    long = float(row['prim_long_dec'])
+    if lat > max_lat or long > max_long:
+        continue
+    if lat < min_lat or long < min_long:
         continue
     print("\t".join([row[col] for col in cols]))
