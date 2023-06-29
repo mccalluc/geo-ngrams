@@ -35,8 +35,8 @@ async function main() {
       x: {field: 'norm', type: 'quantitative', title: null},
       y: {field: 'count', type: 'quantitative', title: null},
       text: {field: 'ngram'},
-      row: {field: 'lat', title: "latitude / count", sort: "descending"},
-      column: {field: "long", title: "longitude / norm"}
+      row: {field: 'lat', title: "latitude; count", sort: "descending"},
+      column: {field: "long", title: "longitude; log2(ratio)"}
     }
   }
 
